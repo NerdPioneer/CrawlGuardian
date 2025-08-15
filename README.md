@@ -45,3 +45,7 @@ Do they want a CSV, Markdown table, maybe JSON or an email summary? Maybe even s
 
 
 These are my top 5 questions that I felt that will be important to find out through out this project. 
+
+
+
+Optional Idea:- Docker makes CrawlGuardian easier to run anywhere, schedule reliably, and keep locked-down. If you plan to share it, run it on a schedule (GitHub Actions/AWS), or avoid “works on my machine” drama, containerize it.
