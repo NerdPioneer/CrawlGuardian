@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+	<h2>Results</h2>
+	<table class="table">
+		<thead>
+			<tr><th>ID</th><th>Source</th><th>Title</th><th>URL</th><th>First Seen</th><th>Last Seen</th><th>Details</th></tr>
+		</thead>
+		<tbody>
+			{% for item in items %}
+			<tr>
+				<td>{{ item.id }}</td>
+				<td>{{ item.source_id }}</td>
+				<td>{{ item.title }}</td>
+				<td><a href="{{ item.url }}" target="_blank">link</a></td>
+				<td>{{ item.first_seen.strftime('%Y-%m-%d %H:%M') }}</td>
+				<td>{{ item.last_seen.strftime('%Y-%m-%d %H:%M') }}</td>
+				<td><a class="btn" href="/results/item/{{ item.id }}">Open</a></td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}

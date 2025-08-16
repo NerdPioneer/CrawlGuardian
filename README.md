@@ -1,51 +1,65 @@
-# CrawlGuardian
-What it does: Crawls websites. Gathers clean data. Outputs it in simple tables or files.
+# Python Scraper + Web UI
 
-### Why CrawlGuardian matters
+A modular FastAPI application for scraping web content with a clean web UI. Supports multiple use-cases (blogs, news, competitor pricing) and exports (CSV, JSON, Markdown), email summaries, and versioned snapshots.
 
-In a world now powered by AI, it’s easy to trust big models without knowing the gears turning behind them. But if you don’t understand the basics like how data is collected, structured, or even whether it’s gathered responsibly you’re just running blind.
+## Features
+- Sources categorized as blog/news/pricing/other
+- On-demand scraping via web UI
+- Item change detection with versioned snapshots
+- Exports: CSV, JSON, Markdown table
+- Email summaries (SMTP)
+- SQLite storage, ready for growth
 
-Learning simple automation isn’t a throwback it’s your foundation. It gives you direction on how data pipelines work, why things might break, and how to fix them. That understanding is what separates passive users from creators.
+## Quickstart
 
-### How CrawlGuardian helps
+1. Install dependencies:
 
-Teaches you gently how to fetch web pages like a nice guest—not a bot crashing the doors.
+```bash
+python -m pip install -r requirements.txt
+```
 
-Shows you data transformation in action: raw bits to CSV or neat Markdown tables.
+2. Configure environment (optional):
 
-Builds muscle for thinking like a system, not just a user.
+Copy `.env.example` to `.env` and set values as needed (SMTP for email, DB path, etc.).
 
+3. Run the server:
 
-Through out the project I will be manually updating documentation as I go along, resources i found helpful in better understanding certain pieces of the project and why implementing it is important. 
+```bash
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+```
 
-### Important Questions to ask ourselves 
+4. Open the UI:
 
-**1. What problem are we actually solving?**
+Visit `http://localhost:8000`.
 
-Why does anyone need a scraper? Is it for tracking blog posts, aggregating news, monitoring competitor pricing, or something else? We have to nail that down because without a clear goal, we will just be scraping for sport, and we don't want to waste unnecessary resources. 
+## Project Structure
 
-**2. What data matters to the user?**
-Are we capturing titles and URLs? Dates? Prices? Reviews? Define exactly what fields are essential and why. keep it nice and neat maybe in a CSV. 
+```
+app/
+  main.py
+  models.py
+  routers/
+    sources.py
+    jobs.py
+    results.py
+  services/
+    scraper.py
+    exporters.py
+    emailer.py
+    diff.py
+    scheduler.py
+  utils/
+    http.py
+  templates/
+    base.html
+    index.html
+    sources.html
+    results.html
+  static/
+    styles.css
+```
 
-**3. Which sites are fair play?**
-What kinds of sites should CrawlGuardian politely crawl on ? I know more AI Regulations are being implemented this year, we will need to read up on that information so that we are not crossing any boundaries.
-
-What about public APIs, directories, Libraries and which ones are off limits (forums with login walls, social profiles, etc.)? 
-
-Sorting this out early steers you clear of ethical swamps and legal issues. 
-
-
-**4. How do we keep our footprint light?**
-
-Do we honor robots.txt, throttle requests sensibly, and cache responses? These aren’t nice-to-haves—they’re non-negotiable. Lay out exactly how CrawlGuardian will be a good guest, not a trampler.
-
-**5. How should data land in the user’s hands?**
-
-Do they want a CSV, Markdown table, maybe JSON or an email summary? Maybe even snapshots for versioning? Decide early and build for it—it’ll show you care about UX, not just output.
-
-
-These are my top 5 questions that I felt that will be important to find out through out this project. 
-
-
-
-Optional Idea:- Docker makes CrawlGuardian easier to run anywhere, schedule reliably, and keep locked-down. If you plan to share it, run it on a schedule (GitHub Actions/AWS), or avoid “works on my machine” drama, containerize it.
+## Notes
+- This is a foundation. Extend category-specific scrapers or add Playwright/Selenium when needed.
+- Add authentication or permissions later if required.
+- For scheduling, wire up the APScheduler in `services/scheduler.py`.

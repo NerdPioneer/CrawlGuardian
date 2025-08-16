@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+	<h2>Sources</h2>
+	<form method="post" action="/sources/create" class="card">
+		<h3>Add Source</h3>
+		<div class="form-grid">
+			<label>Name<input name="name" required></label>
+			<label>URL<input name="url" type="url" required></label>
+			<label>Category
+				<select name="category">
+					{% for c in categories %}
+						<option value="{{ c.value }}">{{ c.value }}</option>
+					{% endfor %}
+				</select>
+			</label>
+		</div>
+		<details>
+			<summary>Optional CSS Selectors (advanced)</summary>
+			<div class="form-grid">
+				<label>List Selector<input name="list_selector" placeholder="e.g. article, .post, li"></label>
+				<label>Title Selector<input name="title_selector" placeholder="e.g. h2 a"></label>
+				<label>Link Selector<input name="link_selector" placeholder="e.g. a"></label>
+				<label>Content Selector<input name="content_selector" placeholder="e.g. p"></label>
+				<label>Price Selector<input name="price_selector" placeholder="e.g. .price"></label>
+			</div>
+		</details>
+		<button class="btn" type="submit">Add</button>
+	</form>
+
+	<table class="table">
+		<thead>
+			<tr><th>ID</th><th>Name</th><th>URL</th><th>Category</th><th>Active</th><th>Actions</th></tr>
+		</thead>
+		<tbody>
+			{% for s in sources %}
+			<tr>
+				<td>{{ s.id }}</td>
+				<td>{{ s.name }}</td>
+				<td><a href="{{ s.url }}" target="_blank">{{ s.url }}</a></td>
+				<td>{{ s.category.value }}</td>
+				<td>{{ 'Yes' if s.active else 'No' }}</td>
+				<td>
+					<form method="post" action="/jobs/{{ s.id }}/run" style="display:inline"><button class="btn">Run</button></form>
+					<form method="post" action="/sources/{{ s.id }}/toggle" style="display:inline"><button class="btn secondary">Toggle</button></form>
+					<form method="post" action="/sources/{{ s.id }}/delete" style="display:inline" onclick="return confirm('Delete source?')"><button class="btn danger">Delete</button></form>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}

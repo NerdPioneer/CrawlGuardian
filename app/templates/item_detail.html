@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+	<h2>Item #{{ item.id }}</h2>
+	<p><strong>Title:</strong> {{ item.title }}<br>
+	<strong>URL:</strong> <a href="{{ item.url }}" target="_blank">{{ item.url }}</a></p>
+
+	<h3>Versions</h3>
+	<table class="table">
+		<thead>
+			<tr><th>ID</th><th>Seen At</th><th>Hash</th><th>Price</th><th>Snapshot</th></tr>
+		</thead>
+		<tbody>
+			{% for v in versions %}
+			<tr>
+				<td>{{ v.id }}</td>
+				<td>{{ v.seen_at.strftime('%Y-%m-%d %H:%M') }}</td>
+				<td style="font-family:monospace">{{ v.content_hash }}</td>
+				<td>{{ v.price_value }}</td>
+				<td>
+					{% if v.snapshot_path %}
+						<a class="btn" href="/download?path={{ v.snapshot_path }}">Download</a>
+					{% endif %}
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+	<h2>Runs</h2>
+	<table class="table">
+		<thead>
+			<tr><th>ID</th><th>Source</th><th>Started</th><th>Ended</th><th>Status</th><th>Created</th><th>Changed</th><th>Exports</th></tr>
+		</thead>
+		<tbody>
+			{% for r in runs %}
+			<tr>
+				<td>{{ r.id }}</td>
+				<td>{{ r.source_id }}</td>
+				<td>{{ r.started_at.strftime('%Y-%m-%d %H:%M') }}</td>
+				<td>{{ r.ended_at.strftime('%Y-%m-%d %H:%M') if r.ended_at else '' }}</td>
+				<td>{{ r.status }}</td>
+				<td>{{ r.created_items }}</td>
+				<td>{{ r.changed_items }}</td>
+				<td>
+					{% if r.export_csv_path %}<a class="btn" href="/download?path={{ r.export_csv_path }}">CSV</a>{% endif %}
+					{% if r.export_json_path %}<a class="btn" href="/download?path={{ r.export_json_path }}">JSON</a>{% endif %}
+					{% if r.export_md_path %}<a class="btn" href="/download?path={{ r.export_md_path }}">MD</a>{% endif %}
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}
