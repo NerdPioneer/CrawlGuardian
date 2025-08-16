@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>{{ title or 'ScraperUI' }}</title>
+	<link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+	<header class="container">
+		<h1><a href="/">{{ title or 'ScraperUI' }}</a></h1>
+		<nav>
+			<a href="/sources/">Sources</a>
+			<a href="/jobs/runs">Runs</a>
+			<a href="/results/">Results</a>
+		</nav>
+	</header>
+	<main class="container">
+		{% block content %}{% endblock %}
+	</main>
+	<footer class="container muted">
+		<p>Built with FastAPI. Exports to CSV, JSON, Markdown. Snapshots for versioning.</p>
+	</footer>
+</body>
+</html>
